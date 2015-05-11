@@ -81,7 +81,7 @@ public
                   Query query = QueryFactory.create (s2); //s2 = the query above
                   QueryExecution qExe = QueryExecutionFactory.sparqlService ("http://dbpedia.org/sparql", query);
                   ResultSet results = qExe.execSelect ();
-                  writer.println ("<html><hed><center><h1> Books Link</h1></center></hed><body style=\"background: #E0F8F7\">"
+                  writer.println ("<html><hed><center><h1> Books Link</h1></center></hed><body style=\"background: #E6E6E6\">"
                                   + "<h3> Author Name: " + authorname + "<br/><ol>");
                   while (results.hasNext ()) {
                            QuerySolution s = results.next ();
