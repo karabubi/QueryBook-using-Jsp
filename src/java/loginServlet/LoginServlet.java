@@ -76,17 +76,20 @@ public
 "  ?author dbpprop:name ?name " +
 "  FILTER regex(?name, \"" + authorname + "\", \"i\") " +"}";
 
-                  System.out.println ("debug s2: >>>>>\n" + s2 + "\n<<<<<<");
+                 // System.out.println ("debug s2: >>>>>\n" + s2 + "\n<<<<<<");
 
                   Query query = QueryFactory.create (s2); //s2 = the query above
                   QueryExecution qExe = QueryExecutionFactory.sparqlService ("http://dbpedia.org/sparql", query);
                   ResultSet results = qExe.execSelect ();
-                  writer.println ("<html><hed><center><h1> Books Link</h1></center></hed><body style=\"background: #E6E6E6\">"
+                  writer.println ("<html><head><center><h1> Books Link</h1></center></head><body style=\"background: #E6E6E6\">"
                                   + "<h3> Author Name: " + authorname + "<br/><ol>");
+                  if (!results.hasNext ())
+                           writer.println ("<h3><font color= 'red'>The Author " + authorname + " has No Books </font></h3>" );
                   while (results.hasNext ()) {
                            QuerySolution s = results.next ();
                            String book = s.get ("Book").toString ();
                            writer.println ("<li>" + s.get ("name").toString () + "  - <a href=" + book + "> " + book + "</a></li>");
+                           
                   }
 
                   // return response
