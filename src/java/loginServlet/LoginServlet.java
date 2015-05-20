@@ -59,7 +59,7 @@ public
                   //resp.getWriter 
 
 
-
+//DISTINCT
 
                   String s2 = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> \n"
                               + "PREFIX dbpprop: <http://dbpedia.org/property/> \n"
@@ -69,13 +69,13 @@ public
                               + "\n"
                               + //John Hebeler /Agatha Christie/James Hendler
                                                   
-"SELECT ?Book ?name " +
+"SELECT DISTINCT ?Book ?isbn ?name " +
 "WHERE { " +
 "  ?Book a dbpedia-owl:Book . " +
+"  ?Book dbpedia-owl:isbn ?isbn ." +
 "  ?Book dbpprop:author ?author . " +
 "  ?author dbpprop:name ?name " +
-"  FILTER regex(?name, \"" + authorname + "\", \"i\") " +"}";
-
+"FILTER (regex(?name, \"" + authorname + "\", \"i\") )" +"}";
                  // System.out.println ("debug s2: >>>>>\n" + s2 + "\n<<<<<<");
 
                   Query query = QueryFactory.create (s2); //s2 = the query above
@@ -85,18 +85,18 @@ public
                                   + "<h3> Author Name: " + authorname + "<br/><ol>");
                   if (!results.hasNext ())
                            writer.println ("<h3><font color= 'red'>The Author " + authorname + " has No Books </font></h3>" );
+                  
                   while (results.hasNext ()) {
                            QuerySolution s = results.next ();
                            String book = s.get ("Book").toString ();
-                           writer.println ("<li>" + s.get ("name").toString () + "  - <a href=" + book + "> " + book + "</a></li>");
-                           
+                           String isbn = s.get ("isbn").toString ();
+                          writer.println ("<li>" + "<img src=http://covers.openlibrary.org/b/isbn/" + isbn + "-S.jpg height='85' width=`85`>"+s.get ("name").toString ()+"<a href="+ book + "> - " + book + "</a>"+ isbn+"</li>" );                     //&jscmd=viewapi&callback=mycallback> 
+            
                   }
-
+//qExe.close ();
                   // return response
                   writer.println ("</ol></body></html>");
                   //------------------------------
-
-
-
          }
+         
 }
